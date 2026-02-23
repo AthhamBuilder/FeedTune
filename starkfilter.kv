@@ -1,75 +1,131 @@
+#:import dp kivy.metrics.dp
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDScrollView kivymd.uix.scrollview.MDScrollView
+#:import MDIconButton kivymd.uix.button.MDIconButton
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDCard kivymd.uix.card.MDCard
+#:import FloatLayout kivy.uix.floatlayout.FloatLayout
+#:import MDGridLayout kivymd.uix.gridlayout.MDGridLayout
+#:import MDSeparator kivymd.uix.separator.MDSeparator
+
 <MainScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.12, 0.12, 0.12, 1  # Dark background
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
     FloatLayout:
-        # --- Persistent Top Bar ---
+        # --- Header with gradient effect ---
         MDBoxLayout:
-            id: top_bar
-            orientation: "horizontal"
-            size_hint_y: None
-            height: dp(56)
-            spacing: dp(10)
-            padding: dp(8)
-            pos_hint: {"top": 1}
-
-            MDIconButton:
-                id: menu_btn
-                icon: "dots-vertical"
-                size_hint: None, None
-                size: dp(50), dp(50)
-                on_release: app.toggle_topic_panel()
-
-            MDTextField:
-                id: search_field
-                hint_text: "Search topics..."
-                size_hint_x: 0.7
-                mode: "rectangle"
-                background_color: 0.25, 0.25, 0.25, 1  # grey like ChatGPT
-                radius: [28]  # fully rounded
-                text_color: 1,1,1,1
-                cursor_color: 1,1,1,1
-                line_color_focus: 0,0,0,0
-                line_color_normal: 0,0,0,0
-
-            MDIconButton:
-                icon: "magnify"
-                size_hint: None, None
-                size: dp(50), dp(50)
-                md_bg_color: 0.25, 0.25, 0.25, 1  # grey like search bar
-                radius: [28]
-                on_release: app.search_topics(search_field.text)
-
-        # --- Collapsible Topic Panel (No purple) ---
-        MDBoxLayout:
-            id: topic_panel
+            id: header
             orientation: "vertical"
-            size_hint: 0.25, 0.85
-            pos_hint: {"x": 0, "y": 0.05}
-            md_bg_color: 0.15, 0.15, 0.15, 1  # dark grey
-            padding: dp(8)
-            spacing: dp(8)
+            size_hint_y: None
+            height: dp(120)
+            pos_hint: {"top": 1, "x": 0}
+            padding: dp(16)
+            spacing: dp(12)
 
+            canvas.before:
+                Color:
+                    rgba: 0.15, 0.15, 0.15, 1  # Slightly lighter dark
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            # --- Title ---
             MDLabel:
-                text: "Topics"
-                font_style: "H6"
+                text: "📰 News Feed"
+                font_style: "H5"
                 size_hint_y: None
-                height: dp(30)
+                height: dp(36)
                 theme_text_color: "Primary"
+                bold: True
 
-            MDScrollView:
+            # --- Search Bar ---
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: dp(10)
+                size_hint_y: None
+                height: dp(52)
+
+                MDTextField:
+                    id: search_field
+                    hint_text: "Search news..."
+                    mode: "rectangle"
+                    size_hint_x: 1
+                    text_color: 1, 1, 1, 1
+                    hint_text_color_focus: 0.7, 0.7, 0.7, 1
+                    hint_text_color_normal: 0.5, 0.5, 0.5, 1
+                    line_color_focus: 0, 188/255, 212/255, 1
+                    line_color_normal: 0.3, 0.3, 0.3, 1
+                    cursor_color: 0, 188/255, 212/255, 1
+                    background_color: 0.2, 0.2, 0.2, 1
+                    padding: dp(12), dp(8)
+                    multiline: False
+
+                MDIconButton:
+                    icon: "magnify"
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                    md_bg_color: 0, 188/255, 212/255, 1  # Teal accent
+                    radius: [8]
+                    on_release: app.search_topics(search_field.text)
+
+        # --- Collapsible Topic Sidebar ---
+        MDScrollView:
+            id: topic_scroll
+            size_hint: 0.22, 0.8
+            pos_hint: {"x": 0, "y": 0.05}
+            
+            canvas.before:
+                Color:
+                    rgba: 0.14, 0.14, 0.14, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(12)
+                spacing: dp(8)
+                adaptive_height: True
+
+                MDLabel:
+                    text: "Topics"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: dp(32)
+                    bold: True
+                    theme_text_color: "Primary"
+
+                MDSeparator:
+                    size_hint_y: None
+                    height: dp(1)
+
                 MDGridLayout:
                     id: topic_list
                     cols: 1
                     adaptive_height: True
                     spacing: dp(10)
+                    size_hint_y: None
+                    height: self.minimum_height
 
-        # --- Main Scrollable Content Area ---
+        # --- Main Content Area ---
         MDScrollView:
             id: main_scroll
-            size_hint: 0.7, 0.85
-            pos_hint: {"x": 0.28, "y": 0.05}
+            size_hint: 0.78, 0.8
+            pos_hint: {"x": 0.22, "y": 0.05}
 
             MDGridLayout:
                 id: list_view
-                cols: 3
+                cols: 1
                 adaptive_height: True
-                spacing: dp(10)
-                padding: dp(6)
+                spacing: dp(12)
+                padding: dp(16)
+                size_hint_y: None
+                height: self.minimum_height
