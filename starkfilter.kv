@@ -1,0 +1,75 @@
+<MainScreen>:
+    FloatLayout:
+        # --- Persistent Top Bar ---
+        MDBoxLayout:
+            id: top_bar
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(56)
+            spacing: dp(10)
+            padding: dp(8)
+            pos_hint: {"top": 1}
+
+            MDIconButton:
+                id: menu_btn
+                icon: "dots-vertical"
+                size_hint: None, None
+                size: dp(50), dp(50)
+                on_release: app.toggle_topic_panel()
+
+            MDTextField:
+                id: search_field
+                hint_text: "Search topics..."
+                size_hint_x: 0.7
+                mode: "rectangle"
+                background_color: 0.25, 0.25, 0.25, 1  # grey like ChatGPT
+                radius: [28]  # fully rounded
+                text_color: 1,1,1,1
+                cursor_color: 1,1,1,1
+                line_color_focus: 0,0,0,0
+                line_color_normal: 0,0,0,0
+
+            MDIconButton:
+                icon: "magnify"
+                size_hint: None, None
+                size: dp(50), dp(50)
+                md_bg_color: 0.25, 0.25, 0.25, 1  # grey like search bar
+                radius: [28]
+                on_release: app.search_topics(search_field.text)
+
+        # --- Collapsible Topic Panel (No purple) ---
+        MDBoxLayout:
+            id: topic_panel
+            orientation: "vertical"
+            size_hint: 0.25, 0.85
+            pos_hint: {"x": 0, "y": 0.05}
+            md_bg_color: 0.15, 0.15, 0.15, 1  # dark grey
+            padding: dp(8)
+            spacing: dp(8)
+
+            MDLabel:
+                text: "Topics"
+                font_style: "H6"
+                size_hint_y: None
+                height: dp(30)
+                theme_text_color: "Primary"
+
+            MDScrollView:
+                MDGridLayout:
+                    id: topic_list
+                    cols: 1
+                    adaptive_height: True
+                    spacing: dp(10)
+
+        # --- Main Scrollable Content Area ---
+        MDScrollView:
+            id: main_scroll
+            size_hint: 0.7, 0.85
+            pos_hint: {"x": 0.28, "y": 0.05}
+
+            MDGridLayout:
+                id: list_view
+                cols: 3
+                adaptive_height: True
+                spacing: dp(10)
+                padding: dp(6)
