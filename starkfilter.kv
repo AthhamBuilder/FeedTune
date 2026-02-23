@@ -7,7 +7,7 @@
 #:import MDCard kivymd.uix.card.MDCard
 #:import FloatLayout kivy.uix.floatlayout.FloatLayout
 #:import MDGridLayout kivymd.uix.gridlayout.MDGridLayout
-#:import MDSeparator kivymd.uix.separator.MDSeparator
+
 
 <MainScreen>:
     canvas.before:
@@ -103,9 +103,15 @@
                     bold: True
                     theme_text_color: "Primary"
 
-                MDSeparator:
+                Widget:
                     size_hint_y: None
                     height: dp(1)
+                    canvas.before:
+                        Color:
+                            rgba: 0.35, 0.35, 0.35, 1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
 
                 MDGridLayout:
                     id: topic_list
