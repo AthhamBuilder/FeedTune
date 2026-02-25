@@ -109,7 +109,6 @@ class StarkFilter(MDApp):
                             text=text,
                             font_style="Body1",
                             size_hint_y=None,
-                            height=None,
                             adaptive_height=True,
                             max_lines=3,
                             shorten=True,
@@ -139,7 +138,6 @@ class StarkFilter(MDApp):
                 article_card = MDCard(
                     orientation="vertical",
                     size_hint=(1, None),
-                    height=None,
                     adaptive_height=True,
                     radius=[16],
                     md_bg_color=(0.18, 0.18, 0.18, 1),
