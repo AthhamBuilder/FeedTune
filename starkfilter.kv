@@ -37,7 +37,7 @@
 
             # --- Title ---
             MDLabel:
-                text: "📰 News Feed"
+                text: "FeedTune"
                 font_style: "H5"
                 size_hint_y: None
                 height: dp(36)
@@ -53,7 +53,7 @@
 
                 MDTextField:
                     id: search_field
-                    hint_text: "Search news..."
+                    hint_text: "Search By Keywords..."
                     mode: "rectangle"
                     size_hint_x: 1
                     text_color: 1, 1, 1, 1
@@ -102,16 +102,6 @@
                     height: dp(32)
                     bold: True
                     theme_text_color: "Primary"
-
-                Widget:
-                    size_hint_y: None
-                    height: dp(1)
-                    canvas.before:
-                        Color:
-                            rgba: 0.35, 0.35, 0, 1
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
 
                 MDGridLayout:
                     id: topic_list
